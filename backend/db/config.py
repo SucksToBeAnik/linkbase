@@ -2,7 +2,13 @@ from sqlmodel import create_engine, Session, SQLModel
 from settings import env_store
 
 database_url = env_store.DATABASE_URL
+username = env_store.POSTGRES_USER
+password = env_store.POSTGRES_PASSWORD
+db = env_store.POSTGRES_DB
 print(f"-----${database_url}-----")
+print(f"-----${username}-----")
+print(f"-----${password}-----")
+print(f"-----${db}-----")
 
 engine = create_engine(database_url)
 

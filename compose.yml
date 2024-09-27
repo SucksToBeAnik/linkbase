@@ -33,6 +33,9 @@ services:
       - app-network
     environment:
       - DATABASE_URL
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
     
   database:
     container_name: linkbase-database-1
