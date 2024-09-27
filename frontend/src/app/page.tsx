@@ -6,7 +6,7 @@ const Page = async ()=> {
   console.log(links);
   return (
     <div className="bg-red-500">
-      Hello world anik
+      Hello world {links}
     </div>
   )
 }
