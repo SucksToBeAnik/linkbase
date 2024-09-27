@@ -1,0 +1,47 @@
+name: Linkbase
+
+services:
+  frontend:
+    container_name: linkbase-frontend-1
+    restart: always
+    ports:
+      - 3000:3000
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: prod
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    container_name: linkbase-backend-1
+    restart: always
+    ports:
+      - 80:80
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    depends_on:
+      - database
+    networks:
+      - app-network
+    
+  database:
+    container_name: linkbase-database-1
+    image: postgres:latest
+    shm_size: 128mb
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
+    volumes:
+      - app-storage:/var/lib/postgresql/data
+networks:
+  app-network:
+
+volumes:
+  app-storage:
