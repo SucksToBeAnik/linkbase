@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Run containers on remote
         uses: appleboy/ssh-action@master
+        env:
+          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+          DATABASE_URL: ${{ vars.DATABASE_URL }}
         with:
           host: ${{ secrets.IP_ADDRESS }}
           username: ${{ secrets.USERNAME }}
@@ -24,9 +29,4 @@ jobs:
             fi
             cd linkbase || exit
             git pull origin main
-            export POSTGRES_USER=${{ vars.POSTGRES_USER }}
-            export POSTGRES_PASSWORD=${{ vars.POSTGRES_PASSWORD }}
-            export POSTGRES_DB=${{ vars.POSTGRES_DB }}
-            export DATABASE_URL=${{ vars.DATABASE_URL }}
-            echo $POSTGRES_USER && echo $POSTGRES_PASSWORD && echo $POSTGRES_DB && echo $DATABASE_URL
             docker compose up -d --build
