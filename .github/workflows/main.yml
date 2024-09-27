@@ -1,16 +1,27 @@
-# name: linkbase pipeline
+name: linkbase pipeline
 
-# on:
-#   push:
-#     branches: ["main"]
+on:
+  push:
+    branches: ["main"]
 
-# jobs:
-#   build-production:
-#     runs-on: ubuntu-latest
-#     environment: production
+jobs:
+  build-production:
+    runs-on: ubuntu-latest
+    environment: production
 
-#     steps:
-#       - name: run containers on remote
-#         uses: appleboy/ssh-action@master
-#         with:
-          
+    steps:
+      - name: run containers on remote
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd ~/linkbase
+            git pull origin main
+            export POSTGRES_USER=${{ vars.POSTGRES_USER }}}}
+            export POSTGRES_PASSWORD=${{ vars.POSTGRES_PASSWORD }}}}
+            export POSTGRES_DB=${{ vars.POSTGRES_DB }}}}
+            export DATABASE_URL=${{ vars.DATABASE_URL }}
+            docker compose up -d --build

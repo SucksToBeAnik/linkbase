@@ -12,6 +12,9 @@ services:
       target: prod
     depends_on:
       - backend
+    environment:
+      - API_URL=http://linkbase-backend-1
+      - NODE_ENV=production
     networks:
       - app-network
 
@@ -28,6 +31,8 @@ services:
       - database
     networks:
       - app-network
+    environment:
+      - DATABASE_URL
     
   database:
     container_name: linkbase-database-1
@@ -40,6 +45,10 @@ services:
       - app-network
     volumes:
       - app-storage:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
 networks:
   app-network:
 
