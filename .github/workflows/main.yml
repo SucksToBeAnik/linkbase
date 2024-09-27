@@ -10,7 +10,7 @@ jobs:
     environment: production
 
     steps:
-      - name: run containers on remote
+      - name: Run containers on remote
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.IP_ADDRESS }}
@@ -18,7 +18,11 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd ~/linkbase
+            cd ~ || exit
+            if [ ! -d "linkbase" ]; then
+            git clone https://github.com/SucksToBeAnik/linkbase.git
+            fi
+            cd linkbase || exit
             git pull origin main
             export POSTGRES_USER=${{ vars.POSTGRES_USER }}}}
             export POSTGRES_PASSWORD=${{ vars.POSTGRES_PASSWORD }}}}
